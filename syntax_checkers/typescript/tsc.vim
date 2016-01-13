@@ -39,8 +39,13 @@ function! SyntaxCheckers_typescript_tsc_IsAvailable() dict
 endfunction
 
 function! SyntaxCheckers_typescript_tsc_GetLocList() dict
+    let syntastic_extprog_tsc_args = '--module commonjs'
+    if (exists('g:syntastic_extprog_tsc_args'))
+      let syntastic_extprog_tsc_args = g:syntastic_extprog_tsc_args
+    endif
+
     let makeprg = self.makeprgBuild({
-        \ 'args': '--module commonjs',
+        \ 'args': syntastic_extprog_tsc_args,
         \ 'args_after': (s:tsc_new ? '--noEmit' : '--out ' . syntastic#util#DevNull()) })
 
     let errorformat =
